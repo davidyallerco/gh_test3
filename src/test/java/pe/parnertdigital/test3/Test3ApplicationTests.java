@@ -53,6 +53,10 @@ class Test3ApplicationTests {
 		//cuanto quedo , deberia ser 900, se sumo 100 lo cual seria 2100
 		assertEquals("900", saldoOrigen.toPlainString());
 		assertEquals("2100", saldoDestino.toPlainString());
+
+		//por defecto es uno, y le llega tres , saldra error
+		verify(cuentaRespository).buscarPorId(1L);
+		verify(cuentaRespository).buscarPorId(2L);
 	}
 
 }
