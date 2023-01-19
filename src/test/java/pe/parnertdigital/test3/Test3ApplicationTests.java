@@ -132,6 +132,13 @@ void contextLoads2() {
 
 		//afirmamos que las dos instancias sean la misma
 		assertSame(cuenta1, cuenta2);
+		//otra forma
+		assertTrue(cuenta1 == cuenta2);
+		//
+		assertEquals("David", cuenta1.getPersona());
+		assertEquals("David", cuenta2.getPersona());
+		//verificar que se haya invocado dos veces..
+		verify(cuentaRespository, times(2)).buscarPorId(1L);
 
 
 
