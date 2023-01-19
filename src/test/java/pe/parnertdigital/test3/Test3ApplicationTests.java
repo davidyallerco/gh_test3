@@ -120,4 +120,21 @@ void contextLoads2() {
 
 
 }
+
+
+	@Test
+	void contextLoads3(){
+		when(cuentaRespository.buscarPorId(1L)).thenReturn(crearCuenta001());
+
+		//comprobamos dos cuentas
+		Cuenta cuenta1 = service.buscarPorId(1L);
+		Cuenta cuenta2 = service.buscarPorId(1L);
+
+		//afirmamos que las dos instancias sean la misma
+		assertSame(cuenta1, cuenta2);
+
+
+
+	}
+
 }
