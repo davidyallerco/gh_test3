@@ -3,11 +3,13 @@ package pe.parnertdigital.test3;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.mockito.*;
 import org.springframework.boot.test.context.SpringBootTest;
 import pe.parnertdigital.test3.repositories.BancoRepository;
 import pe.parnertdigital.test3.repositories.CuentaRespository;
 import pe.parnertdigital.test3.services.CuentaService;
 import pe.parnertdigital.test3.services.CuentaServiceImpl;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.math.BigDecimal;
 
@@ -34,10 +36,13 @@ class Test3ApplicationTests {
 		when(cuentaRespository.buscarPorId(2L)).thenReturn(Datos.CUENTA_002);
 		when(bancoRepository.buscarPorId(1L)).thenReturn(Datos.BANCO);
 
-		//antes de realizar la transferencia
+		//antes de realizar la transferencia, la cuenta 1 va transferir a la cuenta 2
 		BigDecimal saldoOrigen = service.revisarSaldo(1L);
 		BigDecimal saldoDestino = service.revisarSaldo(2L);
-		
+		//vemos como estan los saldos
+		assertEquals("1000", saldoOrigen.toPlainString());
+		assertEquals("2000", saldoDestino.toPlainString());
+
 	}
 
 }
