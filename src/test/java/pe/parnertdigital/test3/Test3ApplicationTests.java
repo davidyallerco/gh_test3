@@ -17,6 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.math.BigDecimal;
 
 import static  org.mockito.Mockito.*;
+import static pe.parnertdigital.test3.Datos.*;
 
 @SpringBootTest
 class Test3ApplicationTests {
@@ -36,9 +37,9 @@ class Test3ApplicationTests {
 
 	@Test
 	void contextLoads() {
-		when(cuentaRespository.buscarPorId(1L)).thenReturn(Datos.crearCuenta001());
-		when(cuentaRespository.buscarPorId(2L)).thenReturn(Datos.crearCuenta002());
-		when(bancoRepository.buscarPorId(1L)).thenReturn(Datos.crearBanco());
+		when(cuentaRespository.buscarPorId(1L)).thenReturn(crearCuenta001());
+		when(cuentaRespository.buscarPorId(2L)).thenReturn(crearCuenta002());
+		when(bancoRepository.buscarPorId(1L)).thenReturn(crearBanco());
 
 		//antes de realizar la transferencia, la cuenta 1 va transferir a la cuenta 2
 		BigDecimal saldoOrigen = service.revisarSaldo(1L);
@@ -74,9 +75,9 @@ class Test3ApplicationTests {
 //	que pasa que tine la cuenta es menor al mono que se va a transferir
 @Test
 void contextLoads2() {
-	when(cuentaRespository.buscarPorId(1L)).thenReturn(Datos.crearCuenta001());
-	when(cuentaRespository.buscarPorId(2L)).thenReturn(Datos.crearCuenta002());
-	when(bancoRepository.buscarPorId(1L)).thenReturn(Datos.crearBanco());
+	when(cuentaRespository.buscarPorId(1L)).thenReturn(crearCuenta001());
+	when(cuentaRespository.buscarPorId(2L)).thenReturn(crearCuenta002());
+	when(bancoRepository.buscarPorId(1L)).thenReturn(crearBanco());
 
 
 	BigDecimal saldoOrigen = service.revisarSaldo(1L);
