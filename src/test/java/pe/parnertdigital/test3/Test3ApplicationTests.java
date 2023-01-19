@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.mockito.*;
 import org.springframework.boot.test.context.SpringBootTest;
+import pe.parnertdigital.test3.exceptions.DineroInsuficienteException;
 import pe.parnertdigital.test3.models.Banco;
 import pe.parnertdigital.test3.models.Cuenta;
 import pe.parnertdigital.test3.repositories.BancoRepository;
@@ -30,6 +31,10 @@ class Test3ApplicationTests {
 		cuentaRespository = mock(CuentaRespository.class);
 		bancoRepository = mock(BancoRepository.class);
 		service = new CuentaServiceImpl(cuentaRespository, bancoRepository);
+		//reiniciamos los datos para que se use en cada metodo
+		Datos.CUENTA_001.setSaldo(new BigDecimal("1000"));
+		Datos.CUENTA_002.setSaldo(new BigDecimal("2000"));
+		Datos.BANCO.setTotalTransferencias(0);
 	}
 
 	@Test
@@ -69,4 +74,43 @@ class Test3ApplicationTests {
 		verify(bancoRepository).actualizar(any(Banco.class));
 	}
 
+//	que pasa que tine la cuenta es menor al mono que se va a transferir
+@Test
+void contextLoads2() {
+	when(cuentaRespository.buscarPorId(1L)).thenReturn(Datos.CUENTA_001);
+	when(cuentaRespository.buscarPorId(2L)).thenReturn(Datos.CUENTA_002);
+	when(bancoRepository.buscarPorId(1L)).thenReturn(Datos.BANCO);
+
+
+	BigDecimal saldoOrigen = service.revisarSaldo(1L);
+	BigDecimal saldoDestino = service.revisarSaldo(2L);
+
+	assertEquals("1000", saldoOrigen.toPlainString());
+	assertEquals("2000", saldoDestino.toPlainString());
+
+
+	assertThrows(DineroInsuficienteException.class,()->{
+		service.tranferir(1L,2L, new BigDecimal("1200"), 1L);
+
+	});
+
+	saldoOrigen = service.revisarSaldo(1L);
+	saldoDestino = service.revisarSaldo(2L);
+
+	//como se lanza la exception  no cambioa nada sigue on 1000 y 2ooo
+	assertEquals("1000", saldoOrigen.toPlainString());
+	assertEquals("2000", saldoDestino.toPlainString());
+
+	int total = service.revisarTotalTransferencias(1L);
+	assertEquals(0, total);
+
+	//por defecto es uno, y le llega tres , para especificar que espera 3 es con times
+	verify(cuentaRespository, times(3)).buscarPorId(1L);
+	verify(cuentaRespository, times(2)).buscarPorId(2L);
+	//como no se ejecuta se pone never
+	verify(cuentaRespository, never()).actualizar(any(Cuenta.class));
+
+	verify(bancoRepository,times(1)).buscarPorId(1L);
+	verify(bancoRepository, never()).actualizar(any(Banco.class));
+}
 }
