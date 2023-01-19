@@ -43,6 +43,16 @@ class Test3ApplicationTests {
 		assertEquals("1000", saldoOrigen.toPlainString());
 		assertEquals("2000", saldoDestino.toPlainString());
 
+		//realizamos la tranferencias
+		service.tranferir(1L,2L, new BigDecimal("100"), 1L);
+		//..cuenta 1 , cuenta 2 destino, monto , banco
+
+		saldoOrigen = service.revisarSaldo(1L);
+		saldoDestino = service.revisarSaldo(2L);
+
+		//cuanto quedo , deberia ser 900, se sumo 100 lo cual seria 2100
+		assertEquals("900", saldoOrigen.toPlainString());
+		assertEquals("2100", saldoDestino.toPlainString());
 	}
 
 }
