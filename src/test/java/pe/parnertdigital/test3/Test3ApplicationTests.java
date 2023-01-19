@@ -21,17 +21,18 @@ import static pe.parnertdigital.test3.Datos.*;
 
 @SpringBootTest
 class Test3ApplicationTests {
-
+	@Mock
 	CuentaRespository cuentaRespository;
+	@Mock
 	BancoRepository bancoRepository;
-
-	CuentaService service;
+	@InjectMocks//es necesario que sea de la implementacion
+	CuentaServiceImpl service;//cambiamos a impl
 
 	@BeforeEach
 	void setUp() {
-		cuentaRespository = mock(CuentaRespository.class);
-		bancoRepository = mock(BancoRepository.class);
-		service = new CuentaServiceImpl(cuentaRespository, bancoRepository);
+//		cuentaRespository = mock(CuentaRespository.class);
+//		bancoRepository = mock(BancoRepository.class);
+//		service = new CuentaServiceImpl(cuentaRespository, bancoRepository);
 
 	}
 
