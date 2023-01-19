@@ -28,10 +28,8 @@ class Test3ApplicationTests {
 	@MockBean
 	BancoRepository bancoRepository;
 	@Autowired
-	CuentaServiceImpl service;
-	//...hacer de esta clase un componente de spring
-	// ...registrar como un bean osea un componente del framework
-	//...etiquetamos con @Service en su clase
+	CuentaService service;
+	//...tambien permite definir de la interface
 
 	@BeforeEach
 	void setUp() {
