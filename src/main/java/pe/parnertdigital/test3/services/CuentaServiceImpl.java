@@ -1,13 +1,14 @@
 package pe.parnertdigital.test3.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import pe.parnertdigital.test3.models.Banco;
 import pe.parnertdigital.test3.models.Cuenta;
 import pe.parnertdigital.test3.repositories.BancoRepository;
 import pe.parnertdigital.test3.repositories.CuentaRespository;
 
 import java.math.BigDecimal;
-
+@Service
 public class CuentaServiceImpl implements CuentaService{
 
     private CuentaRespository cuentaRespository;

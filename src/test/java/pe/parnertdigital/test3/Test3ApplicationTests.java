@@ -4,7 +4,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.mockito.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import pe.parnertdigital.test3.exceptions.DineroInsuficienteException;
 import pe.parnertdigital.test3.models.Banco;
 import pe.parnertdigital.test3.models.Cuenta;
@@ -21,18 +23,18 @@ import static pe.parnertdigital.test3.Datos.*;
 
 @SpringBootTest
 class Test3ApplicationTests {
-	@Mock
+	@MockBean
 	CuentaRespository cuentaRespository;
-	@Mock
+	@MockBean
 	BancoRepository bancoRepository;
-	@InjectMocks//es necesario que sea de la implementacion
-	CuentaServiceImpl service;//cambiamos a impl
+	@Autowired
+	CuentaServiceImpl service;
+	//...hacer de esta clase un componente de spring
+	// ...registrar como un bean osea un componente del framework
+	//...etiquetamos con @Service en su clase
 
 	@BeforeEach
 	void setUp() {
-//		cuentaRespository = mock(CuentaRespository.class);
-//		bancoRepository = mock(BancoRepository.class);
-//		service = new CuentaServiceImpl(cuentaRespository, bancoRepository);
 
 	}
 
