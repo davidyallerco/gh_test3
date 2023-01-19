@@ -31,17 +31,14 @@ class Test3ApplicationTests {
 		cuentaRespository = mock(CuentaRespository.class);
 		bancoRepository = mock(BancoRepository.class);
 		service = new CuentaServiceImpl(cuentaRespository, bancoRepository);
-		//reiniciamos los datos para que se use en cada metodo
-		Datos.CUENTA_001.setSaldo(new BigDecimal("1000"));
-		Datos.CUENTA_002.setSaldo(new BigDecimal("2000"));
-		Datos.BANCO.setTotalTransferencias(0);
+
 	}
 
 	@Test
 	void contextLoads() {
-		when(cuentaRespository.buscarPorId(1L)).thenReturn(Datos.CUENTA_001);
-		when(cuentaRespository.buscarPorId(2L)).thenReturn(Datos.CUENTA_002);
-		when(bancoRepository.buscarPorId(1L)).thenReturn(Datos.BANCO);
+		when(cuentaRespository.buscarPorId(1L)).thenReturn(Datos.crearCuenta001());
+		when(cuentaRespository.buscarPorId(2L)).thenReturn(Datos.crearCuenta002());
+		when(bancoRepository.buscarPorId(1L)).thenReturn(Datos.crearBanco());
 
 		//antes de realizar la transferencia, la cuenta 1 va transferir a la cuenta 2
 		BigDecimal saldoOrigen = service.revisarSaldo(1L);
@@ -77,9 +74,9 @@ class Test3ApplicationTests {
 //	que pasa que tine la cuenta es menor al mono que se va a transferir
 @Test
 void contextLoads2() {
-	when(cuentaRespository.buscarPorId(1L)).thenReturn(Datos.CUENTA_001);
-	when(cuentaRespository.buscarPorId(2L)).thenReturn(Datos.CUENTA_002);
-	when(bancoRepository.buscarPorId(1L)).thenReturn(Datos.BANCO);
+	when(cuentaRespository.buscarPorId(1L)).thenReturn(Datos.crearCuenta001());
+	when(cuentaRespository.buscarPorId(2L)).thenReturn(Datos.crearCuenta002());
+	when(bancoRepository.buscarPorId(1L)).thenReturn(Datos.crearBanco());
 
 
 	BigDecimal saldoOrigen = service.revisarSaldo(1L);
