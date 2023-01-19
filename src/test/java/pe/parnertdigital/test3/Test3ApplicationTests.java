@@ -70,6 +70,10 @@ class Test3ApplicationTests {
 
 		verify(bancoRepository,times(2)).buscarPorId(1L);
 		verify(bancoRepository).actualizar(any(Banco.class));
+
+		//verificar que no se llame al buscartodos
+		verify(cuentaRespository, times(6)).buscarPorId(anyLong());
+		verify(cuentaRespository, never()).buscarTodos();
 	}
 
 //	que pasa que tine la cuenta es menor al mono que se va a transferir
