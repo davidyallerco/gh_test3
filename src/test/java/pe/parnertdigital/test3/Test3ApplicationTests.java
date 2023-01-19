@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.mockito.*;
 import org.springframework.boot.test.context.SpringBootTest;
+import pe.parnertdigital.test3.models.Banco;
+import pe.parnertdigital.test3.models.Cuenta;
 import pe.parnertdigital.test3.repositories.BancoRepository;
 import pe.parnertdigital.test3.repositories.CuentaRespository;
 import pe.parnertdigital.test3.services.CuentaService;
@@ -54,9 +56,17 @@ class Test3ApplicationTests {
 		assertEquals("900", saldoOrigen.toPlainString());
 		assertEquals("2100", saldoDestino.toPlainString());
 
-		//por defecto es uno, y le llega tres , saldra error
+		int total = service.revisarTotalTransferencias(1L);
+		assertEquals(1, total);
+
+		//por defecto es uno, y le llega tres , para especificar que espera 3 es con times
 		verify(cuentaRespository, times(3)).buscarPorId(1L);
 		verify(cuentaRespository, times(3)).buscarPorId(2L);
+		//especificar cuantas veces se va a ejecutar el update
+		verify(cuentaRespository, times(2)).actualizar(any(Cuenta.class));
+
+		verify(bancoRepository,times(2)).buscarPorId(1L);
+		verify(bancoRepository).actualizar(any(Banco.class));
 	}
 
 }
