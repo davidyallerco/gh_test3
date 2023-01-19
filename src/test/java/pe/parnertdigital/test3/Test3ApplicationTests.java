@@ -114,5 +114,10 @@ void contextLoads2() {
 
 	verify(bancoRepository,times(1)).buscarPorId(1L);
 	verify(bancoRepository, never()).actualizar(any(Banco.class));
+
+	verify(cuentaRespository, times(5)).buscarPorId(anyLong());
+	verify(cuentaRespository, never()).buscarTodos();
+
+
 }
 }
