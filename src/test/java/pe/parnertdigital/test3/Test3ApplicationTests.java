@@ -55,8 +55,8 @@ class Test3ApplicationTests {
 		assertEquals("2100", saldoDestino.toPlainString());
 
 		//por defecto es uno, y le llega tres , saldra error
-		verify(cuentaRespository).buscarPorId(1L);
-		verify(cuentaRespository).buscarPorId(2L);
+		verify(cuentaRespository, times(3)).buscarPorId(1L);
+		verify(cuentaRespository, times(3)).buscarPorId(2L);
 	}
 
 }
